@@ -7,7 +7,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { auth } from "@/lib/auth";
-import { ArrowRight, FolderKanban, Users, BarChart3 } from "lucide-react";
+import {
+  ArrowRight,
+  FolderKanban,
+  Users,
+  BarChart3,
+  ArrowLeft,
+} from "lucide-react";
 import Link from "next/link";
 
 export default async function HomePage() {
@@ -36,17 +42,42 @@ export default async function HomePage() {
                 Access your dashboard to view and manage all your projects
               </CardDescription>
             </CardHeader>
-            <CardContent className="pt-0">
-              <Link href={session?.user?.id ? "/dashboard" : "/login"}>
-                <Button
-                  // onClick={handleDashboardRedirect}
-                  className="`w-full   hover:pointer"
-                  size="lg"
-                >
-                  {session?.user?.id ? "Go to Dashboard" : "Go to Login"}
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
+            <CardContent className="pt-0 flex flex-col align-center justify-center gap-4">
+              {session?.user?.id ? (
+                <Link href="/dashboard">
+                  <Button
+                    // onClick={handleDashboardRedirect}
+
+                    className="`w-full   hover:pointer"
+                    size="lg"
+                  >
+                    Go To Dashboard
+                  </Button>
+                </Link>
+              ) : (
+                <>
+                  {" "}
+                  <Link href="/login">
+                    <Button
+                      // onClick={handleDashboardRedirect}
+                      className="`w-full   hover:pointer"
+                      size="lg"
+                    >
+                      Go To Login
+                    </Button>
+                  </Link>
+                  <Link href="/register">
+                    <Button
+                      // onClick={handleDashboardRedirect}
+                      variant="outline"
+                      className="`w-full   hover:pointer"
+                      size="lg"
+                    >
+                      Register
+                    </Button>
+                  </Link>
+                </>
+              )}
             </CardContent>
           </Card>
         </div>
