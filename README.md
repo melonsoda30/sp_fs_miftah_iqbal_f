@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📦 Next.js App Setup Guide
 
-## Getting Started
+Panduan ini akan membantu Anda menginstal dan menjalankan aplikasi Next.js secara lokal.
 
-First, run the development server:
+## ✅ Prasyarat
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js dan npm sudah terinstal
+- PostgreSQL sudah tersedia dan aktif
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Langkah Instalasi
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Konfigurasi Environment**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   Ubah nama file `.env.example` menjadi `.env`, lalu isi variabel environment sebagai berikut:
 
-## Learn More
+   ```env
+   DATABASE_URL=postgresql://username:password@host:port/database
+   AUTH_SECRET=isi_dengan_secret_unik_anda
+   ```
+2. **Install Dependencies**
 
-To learn more about Next.js, take a look at the following resources:
+   Jalankan perintah berikut untuk menginstal semua dependency yang dibutuhkan:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   npm install
+   ```
+3. **Generate Prisma Client**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   Gunakan perintah ini untuk menghasilkan client Prisma:
 
-## Deploy on Vercel
+   ```bash
+   npx prisma generate
+   ```
+4. **Jalankan Aplikasi**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   Mulai server pengembangan dengan perintah:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   ```bash
+   npm run dev
+   ```
+   Aplikasi akan berjalan di http://localhost:3000.
+
+
+
+
