@@ -4,7 +4,7 @@ import { auth } from "@/lib/auth";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { projectId: string } }
+  { params }: { params: Promise<{ projectId: string }> }
 ) {
   const { projectId } = await params;
   const search = req.nextUrl.searchParams.get("query")?.toLowerCase() || "";

@@ -2,9 +2,24 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
+type TaskStatus = "todo" | "in-progress" | "done";
+
+type StatusCount = {
+  total: number;
+  unassigned: number;
+} & {
+  [key in TaskStatus]: number;
+};
+
+type Task = {
+  id: string;
+  status: TaskStatus;
+  assigneeId: string | null;
+};
+
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
 
@@ -19,18 +34,18 @@ export async function GET(
         { status: 401 }
       );
     }
-    const tasks = await prisma.task.findMany({
+
+    const tasks = (await prisma.task.findMany({
       where: { projectId: id },
       select: {
         id: true,
         status: true,
         assigneeId: true,
       },
-    });
+    })) as Task[];
 
-    type TaskStatus = "todo" | "in-progress" | "done";
     const statusCount = tasks.reduce(
-      (acc, task) => {
+      (acc: StatusCount, task: Task) => {
         acc.total += 1;
         acc[task.status as TaskStatus] += 1;
         if (!task.assigneeId) acc.unassigned += 1;
@@ -42,25 +57,14 @@ export async function GET(
         "in-progress": 0,
         done: 0,
         unassigned: 0,
-      }
+      } satisfies StatusCount
     );
-
-    // Task count per assignee
-    // const taskDistribution: Record<string, number> = {};
-    // for (const task of tasks) {
-    //   if (task.assigneeId) {
-    //     taskDistribution[task.assigneeId] =
-    //       (taskDistribution[task.assigneeId] || 0) + 1;
-    //   }
-    // }
 
     return NextResponse.json(
       {
         success: true,
         message: "Analytics fetched successfully",
-        data: {
-          ...statusCount,
-        },
+        data: statusCount,
       },
       { status: 200 }
     );

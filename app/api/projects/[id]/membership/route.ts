@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   _: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth();
@@ -53,7 +53,7 @@ export async function GET(
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth();
@@ -66,8 +66,9 @@ export async function POST(
         { status: 401 }
       );
     }
-    const body: { userId: string } = await req.json();
-    const { userId } = body;
+    const body: Promise<{ userId: string }> = await req.json();
+    const { userId } = await body;
+    const { id } = await params;
 
     if (!userId) {
       return NextResponse.json(
@@ -90,7 +91,7 @@ export async function POST(
     const userAlreadyMember = await prisma.membership.findFirst({
       where: {
         userId,
-        projectId: params.id,
+        projectId: id,
       },
     });
 
@@ -104,7 +105,7 @@ export async function POST(
     const addMember = await prisma.membership.create({
       data: {
         userId,
-        projectId: params.id,
+        projectId: id,
       },
     });
 
@@ -129,7 +130,7 @@ export async function POST(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth();
@@ -144,8 +145,8 @@ export async function DELETE(
     }
 
     const { id } = await params;
-    const body: { userId: string } = await req.json();
-    const { userId } = body;
+    const body: Promise<{ userId: string }> = await req.json();
+    const { userId } = await body;
 
     if (!id) {
       return NextResponse.json(

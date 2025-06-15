@@ -51,7 +51,12 @@ export function Field({
   dropdown,
   ...props
 }: FieldProps) {
-  const { placeholder, rows, onValueChange, ...restProps } = props as any;
+  const { placeholder, rows, onValueChange, ...restProps } = props as {
+    placeholder?: string;
+    rows?: number;
+    onValueChange?: (value: string) => void;
+    [key: string]: unknown;
+  };
 
   return (
     <div className="flex flex-col gap-2">

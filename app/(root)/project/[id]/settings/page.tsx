@@ -15,7 +15,7 @@ import { redirect } from "next/navigation";
 export default async function ProjectSettings({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const session = await auth();
   if (!session?.user?.id) {

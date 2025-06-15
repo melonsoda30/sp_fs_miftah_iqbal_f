@@ -14,8 +14,8 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import { ApiResponse } from "@/types/api";
-import { Membership, Task } from "@prisma/client";
-import { UserSummary } from "@/types/db";
+import { Task } from "@prisma/client";
+import { Membership, UserSummary } from "@/types/db";
 import { toast } from "sonner";
 
 interface MembershipWithUser extends Membership {
