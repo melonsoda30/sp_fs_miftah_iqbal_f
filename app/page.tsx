@@ -7,13 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { auth } from "@/lib/auth";
-import {
-  ArrowRight,
-  FolderKanban,
-  Users,
-  BarChart3,
-  ArrowLeft,
-} from "lucide-react";
+import { FolderKanban, Users, BarChart3 } from "lucide-react";
 import Link from "next/link";
 
 export default async function HomePage() {
