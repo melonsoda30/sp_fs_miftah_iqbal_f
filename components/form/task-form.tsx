@@ -37,19 +37,19 @@ interface TaskFormProps {
   type: "create" | "edit";
 }
 
+const init = {
+  title: "",
+  description: "",
+  status: "todo",
+  assigneeId: "",
+};
+
 export function TaskForm({ children, initialValues, type }: TaskFormProps) {
   const [errors, setErrors] = useState<ErrorState>({});
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const { id } = useParams();
-  const [form, setForm] = useState<TaskSummary>(
-    initialValues ?? {
-      title: "",
-      description: "",
-      status: "todo",
-      assigneeId: "",
-    }
-  );
+  const [form, setForm] = useState<TaskSummary>(initialValues ?? init);
 
   const { mutate } = useSWR(`/api/projects/${id}/task`, fetcher);
 
@@ -83,8 +83,10 @@ export function TaskForm({ children, initialValues, type }: TaskFormProps) {
       toast.success("Task created successfully");
 
       await mutate();
+      setForm(init);
       setLoading(false);
       setOpen(false);
+      setForm;
     } catch (e) {
       console.error("login error", e);
       setLoading(false);

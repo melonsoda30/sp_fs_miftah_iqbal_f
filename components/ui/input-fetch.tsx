@@ -107,6 +107,7 @@ const InputFetch = () => {
       await mutate();
       setOptions([]);
       setValue("");
+      setSearchQuery("");
       console.log(response);
     } catch (error) {
       console.error("Error patching data:", error);

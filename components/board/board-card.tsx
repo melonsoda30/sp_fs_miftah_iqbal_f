@@ -141,7 +141,7 @@ export const BoardCard = memo<BoardCardProps>(({ item }) => {
       </CardHeader>
 
       <CardDescription className="px-6 pb-4">
-        <p className="text-sm text-foreground/50 min-w-0 break-words hyphens-auto leading-relaxed max-h-[100px]">
+        <p className="text-sm text-foreground/50 min-w-0 break-words hyphens-auto leading-relaxed ">
           <span className="block overflow-hidden line-clamp-3">
             {item.description}
           </span>
