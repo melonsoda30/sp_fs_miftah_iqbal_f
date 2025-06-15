@@ -86,7 +86,7 @@ export function TaskForm({ children, initialValues, type }: TaskFormProps) {
       setForm(init);
       setLoading(false);
       setOpen(false);
-      setForm;
+      setForm(init);
     } catch (e) {
       console.error("login error", e);
       setLoading(false);
